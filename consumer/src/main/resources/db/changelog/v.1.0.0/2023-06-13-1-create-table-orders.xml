@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet logicalFilePath="2023-06-13-1-create-table-orders"
+               id="2023-06-13-1-create-table-orders" author="s.m">
+        <sql>CREATE TYPE status_new AS ENUM ('IN_PROGRESS','CANCELED', 'APPROVED')</sql>
+        <sql>CREATE CAST (varchar AS status_new) WITH INOUT AS IMPLICIT</sql>
+        <createTable tableName="orders">
+            <column name="id" type="serial">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="product_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bar_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="quantity" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="price" type="numeric(19, 2)"/>
+
+            <column name="amount" type="numeric(19, 2)"/>
+
+            <column name="order_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="status_new">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
